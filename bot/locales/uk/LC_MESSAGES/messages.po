@@ -1,0 +1,139 @@
+# Ukrainian translations for PROJECT.
+# Copyright (C) 2023 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2023.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2023-12-03 18:40+0100\n"
+"PO-Revision-Date: 2023-11-22 21:29+0100\n"
+"Last-Translator: \n"
+"Language: uk\n"
+"Language-Team: uk <LL@li.org>\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.13.1\n"
+
+#: commands.py:54
+msgid "At your service."
+msgstr "До ваших послуг."
+
+#: commands.py:74
+msgid "Your chat history with assistant was erased."
+msgstr "Історію вашого чату з асистентом було стерто."
+
+#: commands.py:76
+msgid "You have no chat history with assistant to erase."
+msgstr "Ви не маєте історії чату з помічником, яку можна стерти."
+
+#: commands.py:81
+msgid "Hello *{0}*!"
+msgstr "Добрий день, *{0}*!"
+
+#: commands.py:86
+msgid "help_message"
+msgstr ""
+"Для приватного використання:\n"
+"\n"
+"- Використовуйте /clear, щоб стерти всю історію чату з асистентом. 🗑\n"
+"- Використовуйте /draw PROMPT для створення зображень. 🎨\n"
+"- Надсилайте посилання на YouTube і Tiktok, щоб завантажити відео. 📹🎵\n"
+"\n"
+"Групове використання:\n"
+"\n"
+"Щоб забезпечити правильну роботу бота у групі, надайте боту роль "
+"адміністратора, щоб він міг бачити всі повідомлення в групі. Це дозволить"
+" використовувати команду /call: \n"
+"\n"
+"Відповідайте на повідомлення використовуючи команду /call, щоб обробляти "
+"повідомлення на яке ви відповіли, як запит для асистента.\n"
+"\n"
+"Також ви можете просто надіслати команду /call і бот відгукнеться на ваш "
+"поклик. Далі ви можете просто відповідати на повідомлення бота. Він "
+"обробить вашу відповідь так, ніби ви надіслали повідомлення в приватному "
+"чаті.\n"
+"\n"
+"До того ж можна використовувати шаблон /call ЗАПИТ для безпосереднього "
+"надіслання запиту. ✨"
+
+#: middlewares.py:43
+msgid "This is not your request"
+msgstr "Це не ваш запит"
+
+#: modules/ChatGPT/chatgpt.py:58
+msgid "Too many request. Please be patient and retry a little later."
+msgstr "Забагато запитів. Будь ласка, повторіть пізніше."
+
+#: modules/ChatGPT/chatgpt.py:60
+msgid ""
+"Sorry, your message wasn't handled properly. Please retry or try to clear"
+" your history."
+msgstr ""
+"Вибачте, ваше повідомлення не було оброблено належним чином. Будь ласка, "
+"повторіть спробу, або очистіть історію повідомлень."
+
+#: modules/ChatGPT/chatgpt.py:77
+msgid "Generating..."
+msgstr "Генерація відповіді..."
+
+#: modules/ChatGPT/chatgpt.py:87
+msgid "Sorry, the message was too long"
+msgstr "Вибачте, повідомлення було занадто довгим"
+
+#: modules/ChatGPT/chatgpt.py:89 modules/images/image_generation.py:41
+#: modules/images/image_generation.py:52
+msgid "Sorry, some problem occured"
+msgstr "Вибачте, виникла якась проблема"
+
+#: modules/audio/audio.py:24
+msgid "Couldn't recognize anything."
+msgstr "Не вдалося розпізнати."
+
+#: modules/audio/audio.py:52
+msgid "Sorry, some problem occurred during transcription."
+msgstr "Вибачте, виникла помилка під час транскрипції."
+
+#: modules/images/image_generation.py:56
+msgid ""
+"Please, provide a prompt. Add it after the command or just reply with "
+"this command to the prompt."
+msgstr ""
+"Будь ласка, задайте запит. Додайте його після команди або відповісте на "
+"нього цією командою."
+
+#: modules/images/images_handler.py:24
+msgid "Recognize text"
+msgstr "Розпізнати текст"
+
+#: modules/images/images_handler.py:26
+msgid "What do you want to do with the image?"
+msgstr "Що бажаєте зробити з зображенням?"
+
+#: modules/images/text_recognition.py:53
+msgid "Sorry, some problem occurred during recognition."
+msgstr "Вибачте, виникла помилка під час обробки зображення."
+
+#: modules/tiktok/tiktok.py:34
+msgid "Downloading the video..."
+msgstr "Завантажуємо відео..."
+
+#: modules/tiktok/tiktok.py:45
+msgid "Couldn't download the video"
+msgstr "Не вдалося завантажити відео"
+
+#: modules/yt/youtube.py:80
+msgid "Choose type/resolution"
+msgstr "Виберіть тип/якість"
+
+#: modules/yt/youtube.py:85
+msgid "Sorry, filesize of this video is greater than the limit (50 Mb)"
+msgstr "Вибачте, розмір відео перевищує 50 мб"
+
+#~ msgid "You have no permission to press these buttons"
+#~ msgstr ""
+
