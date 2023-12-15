@@ -1,4 +1,4 @@
-![image](https://github.com/Levizor/ChatGPT-Telegram-Bot/assets/132144514/8d9292d0-07e4-42c0-bdf8-4ca5f66d3e7f)# ChatGPT-Telegram-Bot
+# ChatGPT-Telegram-Bot
 
 ## Project Description
 
