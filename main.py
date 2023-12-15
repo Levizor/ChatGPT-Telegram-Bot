@@ -3,14 +3,16 @@
 # Import necessary modules and libraries
 import asyncio
 import datetime
-import aiogram
 import logging
+
+import aiogram
 from aiogram import Dispatcher
-from bot_instance import bot
-from bot.scheduled import scheduler
-from config import BASE_WEBHOOK_URL, WEBHOOK_PATH, test
-from aiohttp import web
 from aiogram.webhook.aiohttp_server import SimpleRequestHandler, setup_application
+from aiohttp import web
+
+from bot.scheduled import scheduler
+from bot_instance import bot
+from config import BASE_WEBHOOK_URL, WEBHOOK_PATH, test
 from database.database import db
 from dispatcher_instance import dp
 
@@ -38,7 +40,7 @@ def register_routers(dp: Dispatcher) -> None:
     from bot.settings import settings
 
     # Append routers with commands in a specific order
-    dp.include_routers(imgenrouter, cmdrouter, settings, ytrouter, ttrouter, imgrouter, gptrouter,
+    dp.include_routers(imgenrouter, settings, cmdrouter,  ytrouter, ttrouter, imgrouter, gptrouter,
                        avrouter, txtrcgrouter)
 
 
