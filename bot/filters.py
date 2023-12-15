@@ -20,6 +20,11 @@ class CallBackTRdata(CallbackUser, prefix="tr", sep="|"):
     pass
 
 
+class CallBackSettingsData(CallbackUser, prefix="set", sep="|"):
+    button: str
+
+
+
 # Define custom filters
 class BotName(Filter):
     def __init__(self):

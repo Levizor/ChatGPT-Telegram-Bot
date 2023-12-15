@@ -15,11 +15,14 @@ from database.database import db
 from dispatcher_instance import dp
 
 # Configure logging
-logging.basicConfig(
+if not test:
+    logging.basicConfig(
     filename='bot.log',  # Specify the log file
     level=logging.ERROR,  # Set the logging level to capture ERROR and above
     format='%(asctime)s - %(levelname)s - %(message)s',
 )
+
+
 
 def register_routers(dp: Dispatcher) -> None:
     """Registers routers"""
@@ -32,9 +35,12 @@ def register_routers(dp: Dispatcher) -> None:
     from bot.modules.audio.audio import avrouter
     from bot.modules.images.images_handler import imgrouter
     from bot.modules.images.text_recognition import txtrcgrouter
+    from bot.settings import settings
 
     # Append routers with commands in a specific order
-    dp.include_routers(imgenrouter, cmdrouter, ytrouter, ttrouter, imgrouter, gptrouter, avrouter, txtrcgrouter)
+    dp.include_routers(imgenrouter, cmdrouter, settings, ytrouter, ttrouter, imgrouter, gptrouter,
+                       avrouter, txtrcgrouter)
+
 
 async def on_startup(bot: aiogram.Bot):
     # Start the scheduler and create database tables on bot startup
@@ -46,9 +52,11 @@ async def on_startup(bot: aiogram.Bot):
         await bot.set_webhook(f"{BASE_WEBHOOK_URL}{WEBHOOK_PATH}")
     print(f"{datetime.datetime.now().strftime('(%Y-%m-%d)  %H:%M.%S')} >> Bot Started")
 
+
 async def polling(dp, bot):
     # Start polling in test mode
     await dp.start_polling(bot)
+
 
 def main(dp) -> None:
     # Register routers and set up startup logic
@@ -79,6 +87,7 @@ def main(dp) -> None:
             host='0.0.0.0',
             port=8080
         )
+
 
 if __name__ == "__main__":
     main(dp)

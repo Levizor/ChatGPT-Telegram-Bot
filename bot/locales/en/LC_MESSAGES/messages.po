@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2023-12-03 18:40+0100\n"
+"POT-Creation-Date: 2023-12-15 23:39+0100\n"
 "PO-Revision-Date: 2023-11-22 21:16+0100\n"
 "Last-Translator: \n"
 "Language: en\n"
@@ -18,23 +18,23 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.13.1\n"
 
-#: commands.py:54
+#: commands.py:27
 msgid "At your service."
 msgstr ""
 
-#: commands.py:74
+#: commands.py:49
 msgid "Your chat history with assistant was erased."
 msgstr ""
 
-#: commands.py:76
+#: commands.py:51
 msgid "You have no chat history with assistant to erase."
 msgstr ""
 
-#: commands.py:81
+#: commands.py:57
 msgid "Hello *{0}*!"
 msgstr ""
 
-#: commands.py:86
+#: commands.py:64
 msgid "help_message"
 msgstr ""
 "Private Use:\n"
@@ -59,75 +59,132 @@ msgstr ""
 "bot message.It will handle your reply as if you sent a message in a "
 "private chat."
 
-#: middlewares.py:43
+#: keyboards.py:14
+msgid "GPT Provider"
+msgstr ""
+
+#: keyboards.py:15
+msgid "Language"
+msgstr ""
+
+#: keyboards.py:17
+msgid "❌Delete"
+msgstr ""
+
+#: keyboards.py:34 keyboards.py:49
+msgid "↩️Back"
+msgstr ""
+
+#: middlewares.py:75
 msgid "This is not your request"
 msgstr ""
 
-#: modules/ChatGPT/chatgpt.py:58
-msgid "Too many request. Please be patient and retry a little later."
+#: settings.py:20 settings.py:25
+msgid "Settings⚙️"
 msgstr ""
 
-#: modules/ChatGPT/chatgpt.py:60
+#: settings.py:34
+msgid "Choose your GPT provider. By default AiChatOnline is enabled."
+msgstr ""
+
+#: settings.py:42
+msgid "You chose the same provider."
+msgstr ""
+
+#: settings.py:45
+msgid "Provider was changed"
+msgstr ""
+
+#: settings.py:54
+msgid "Choose your language:"
+msgstr ""
+
+#: settings.py:63
+msgid "You chose the same language"
+msgstr ""
+
+#: settings.py:66
+msgid "Language have been changed."
+msgstr ""
+
+#: settings.py:72
+msgid "Settings were deleted."
+msgstr ""
+
+#: modules/ChatGPT/chatgpt.py:76
+msgid "Too many requests. Please be patient and retry a little later."
+msgstr ""
+
+#: modules/ChatGPT/chatgpt.py:78
 msgid ""
 "Sorry, your message wasn't handled properly. Please retry or try to clear"
 " your history."
 msgstr ""
 
-#: modules/ChatGPT/chatgpt.py:77
+#: modules/ChatGPT/chatgpt.py:103
 msgid "Generating..."
 msgstr ""
 
-#: modules/ChatGPT/chatgpt.py:87
+#: modules/ChatGPT/chatgpt.py:117
 msgid "Sorry, the message was too long"
 msgstr ""
 
-#: modules/ChatGPT/chatgpt.py:89 modules/images/image_generation.py:41
-#: modules/images/image_generation.py:52
-msgid "Sorry, some problem occured"
+#: modules/ChatGPT/chatgpt.py:119 modules/images/image_generation.py:51
+#: modules/images/image_generation.py:65
+msgid "Sorry, some problem occurred"
 msgstr ""
 
-#: modules/audio/audio.py:24
+#: modules/audio/audio.py:42 modules/images/text_recognition.py:28
 msgid "Couldn't recognize anything."
 msgstr ""
 
-#: modules/audio/audio.py:52
+#: modules/audio/audio.py:77
 msgid "Sorry, some problem occurred during transcription."
 msgstr ""
 
-#: modules/images/image_generation.py:56
+#: modules/images/image_generation.py:69
 msgid ""
 "Please, provide a prompt. Add it after the command or just reply with "
 "this command to the prompt."
 msgstr ""
 
-#: modules/images/images_handler.py:24
+#: modules/images/images_handler.py:26
 msgid "Recognize text"
 msgstr ""
 
-#: modules/images/images_handler.py:26
+#: modules/images/images_handler.py:29
 msgid "What do you want to do with the image?"
 msgstr ""
 
-#: modules/images/text_recognition.py:53
+#: modules/images/text_recognition.py:58
 msgid "Sorry, some problem occurred during recognition."
 msgstr ""
 
-#: modules/tiktok/tiktok.py:34
+#: modules/tiktok/tiktok.py:28
 msgid "Downloading the video..."
 msgstr ""
 
-#: modules/tiktok/tiktok.py:45
+#: modules/tiktok/tiktok.py:48
 msgid "Couldn't download the video"
 msgstr ""
 
-#: modules/yt/youtube.py:80
+#: modules/yt/youtube.py:58 modules/yt/youtube.py:80
 msgid "Choose type/resolution"
 msgstr ""
 
-#: modules/yt/youtube.py:85
+#: modules/yt/youtube.py:88
 msgid "Sorry, filesize of this video is greater than the limit (50 Mb)"
 msgstr ""
 
 #~ msgid "You have no permission to press these buttons"
+#~ msgstr ""
+
+#~ msgid "Too many request. Please be patient and retry a little later."
+#~ msgstr ""
+
+#~ msgid "Sorry, some problem occured"
+#~ msgstr ""
+
+#~ msgid "Provider"
 #~ msgstr ""
 

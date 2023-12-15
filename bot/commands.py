@@ -1,15 +1,16 @@
 # commands.py
-
+import aiogram.fsm.context
 from aiogram.filters import Command, or_f, CommandStart
 from aiogram import Router, types, F, flags
 from aiogram.types.message import Message
+from bot.keyboards import settings_keyboard
 from config import admin_ids
 from aiogram.utils.i18n import gettext as _
 from dispatcher_instance import dp
 from bot_instance import bot
 from bot.modules.ChatGPT.chatgpt import chatgpt
 from database.database import db
-from bot.filters import BotName, CommandArgs
+from bot.filters import BotName, CommandArgs, CallBackSettingsData
 
 # Create a Router instance for commands
 cmdrouter = Router()
@@ -17,7 +18,7 @@ cmdrouter = Router()
 
 # Define command handlers using the cmdrouter
 @cmdrouter.message(F.text, or_f(Command('call'), BotName()), CommandArgs(False))
-async def cmd_call(msg: Message):
+async def cmd_call(msg: Message, state:aiogram.fsm.context.FSMContext):
     # Handle 'call' command with a reply
     if msg.reply_to_message:
         message = msg.reply_to_message.model_copy(update={"COMMAND": True, "from_user": msg.from_user})
@@ -63,8 +64,8 @@ async def cmd_help(msg: Message) -> None:
     await msg.answer(_("help_message"))
 
 
-@flags.chat_action("typing")
 @cmdrouter.message(Command('stats'), F.from_user.id.in_(admin_ids))
+@flags.chat_action("typing")
 async def cmd_stats(msg: Message) -> None:
     # Handle 'stats' command for admin users
     date_arg = msg.text[len("/stats "):].strip()
@@ -74,3 +75,4 @@ async def cmd_stats(msg: Message) -> None:
     else:
         statistics = await db.get_statistics()
     await msg.answer(statistics)
+
