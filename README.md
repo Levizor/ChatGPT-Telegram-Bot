@@ -1,8 +1,10 @@
-# ChatGPT-Telegram-Bot
+![image](https://github.com/Levizor/ChatGPT-Telegram-Bot/assets/132144514/8d9292d0-07e4-42c0-bdf8-4ca5f66d3e7f)# ChatGPT-Telegram-Bot
 
 ## Project Description
 
 **ChatGPT-Telegram-Bot** is a Telegram bot designed to provide intelligent responses using OpenAI's ChatGPT. Alongside ChatGPT, the bot integrates other AI technologies to enhance its capabilities. Additionally, it features practical functions such as downloading content from YouTube and TikTok.
+
+Bot uses [gpt4free](https://github.com/xtekky/gpt4free) library for providing responses.
 
 ## Installation Instructions
 
