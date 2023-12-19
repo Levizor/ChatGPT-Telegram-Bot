@@ -10,6 +10,7 @@ from aiogram import Dispatcher
 from aiogram.webhook.aiohttp_server import SimpleRequestHandler, setup_application
 from aiohttp import web
 
+from bot.modules.ChatGPT.chatgpt import chatgpt
 from bot.scheduled import scheduler
 from bot_instance import bot
 from config import BASE_WEBHOOK_URL, WEBHOOK_PATH, test
@@ -48,7 +49,7 @@ async def on_startup(bot: aiogram.Bot):
     # Start the scheduler and create database tables on bot startup
     scheduler.start()
     await db.create_tables()
-
+    await chatgpt.update_providers()
     # Set webhook if not in test mode
     if not test:
         await bot.set_webhook(f"{BASE_WEBHOOK_URL}{WEBHOOK_PATH}")

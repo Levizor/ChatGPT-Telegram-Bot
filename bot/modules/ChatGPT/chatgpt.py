@@ -1,18 +1,26 @@
 # chatgpt.py
+import asyncio
+import logging
 
 import g4f.models
 import requests.exceptions
-from openai import AsyncOpenAI
 from aiogram import Router, F
 from aiogram.types import Message
-from bot.middlewares import DatabaseMiddleware, ObservedFieldRestrictionMiddleware
-from config import OPEN_AI
-from bot_instance import bot
 from aiogram.utils.chat_action import ChatActionMiddleware, ChatActionSender
-from g4f import ChatCompletion, Provider
 from aiogram.utils.i18n import gettext as _
-from main import logging
+from g4f import ChatCompletion, Provider
+from openai import AsyncOpenAI
+
 from bot.middlewares import ChatGPTProvider
+from bot.middlewares import DatabaseMiddleware, ObservedFieldRestrictionMiddleware
+from bot_instance import bot
+from config import OPEN_AI
+
+logging.basicConfig(
+    filename='chatgpt.log',  # Specify the log file
+    level=logging.ERROR,  # Set the logging level to capture ERROR and above
+    format='%(asctime)s - %(levelname)s - %(message)s',
+)
 
 
 # Define the ChatGPT class for handling chat responses
@@ -26,10 +34,36 @@ class ChatGPT:
         # Initialize AsyncOpenAI instance
         self.openai = AsyncOpenAI(api_key=OPEN_AI)
 
-        self.providers = {provider.__name__: provider
-                          for provider in Provider.__providers__
-                          if provider.working
-                          }
+        self.providers = {}
+
+    async def update_providers(self):
+
+        tasks=[self.check_provider(provider) for provider in Provider.__providers__ if provider.working]
+
+        results = await asyncio.gather(*tasks)
+
+        for provider, works in results:
+            if works:
+                self.providers[provider.__name__]= provider
+
+
+
+    checking_list = [{"role": "user", "content": "Hi, reply shortly if you hear me."}]
+
+    async def check_provider(self, provider: Provider):
+
+        async def step():
+            try:
+                response = await self.make_request(self.checking_list, provider)
+                print(f"Response of {provider.__name__} --> {response}")
+            except Exception:
+                return False
+            return True if response!="" else False
+
+
+        if await step() and await step():
+            return provider, True
+        return provider, False
 
     # Get or initialize user message history
     async def get_history(self, user_id):
@@ -50,6 +84,15 @@ class ChatGPT:
         history = await self.get_history(user_id)
         history.append(message)
 
+    # Create ChatCompletion using the GPT model
+    async def make_request(self, messages, provider: Provider):
+        response = await ChatCompletion.create_async(
+            model=g4f.models.gpt_35_turbo,
+            messages=messages,
+            provider=provider,
+        )
+        return response
+
     # Get response from ChatGPT
     async def get_response(self, user_id, text, provider: str):
 
@@ -58,12 +101,7 @@ class ChatGPT:
         history.append({"role": "user", "content": text})
         response = None
         try:
-            # Create ChatCompletion using the GPT model
-            response = await ChatCompletion.create_async(
-                model=g4f.models.gpt_35_turbo,
-                messages=history,
-                provider=self.providers[provider],
-            )
+            response = await self.make_request(history, self.providers[provider]) if provider in self.providers else "Sorry, your provider doesn't work now, choose another one"
             # Check for incomplete code blocks and fix them
             if "```" in response and response.count("```") % 2 != 0:
                 response += "```"
