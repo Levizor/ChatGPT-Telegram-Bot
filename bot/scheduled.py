@@ -27,4 +27,4 @@ scheduler = AsyncIOScheduler()
 
 # Schedule the send_stats function to run daily at 23:59
 scheduler.add_job(send_stats, 'cron', hour=23, minute=59)
-scheduler.add_job(update_providers, "interval", minutes=2)
+scheduler.add_job(update_providers, "interval", minutes=60)
