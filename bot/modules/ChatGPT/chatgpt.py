@@ -62,6 +62,7 @@ class ChatGPT:
             return True if response != "" else False
 
         if await step() == await step():
+            print(provider.__name__+" works fine!")
             return provider, True
         return provider, False
 
