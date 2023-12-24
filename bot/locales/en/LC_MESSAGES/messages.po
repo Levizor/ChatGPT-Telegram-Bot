@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2023-12-15 23:39+0100\n"
+"POT-Creation-Date: 2023-12-24 18:20+0100\n"
 "PO-Revision-Date: 2023-11-22 21:16+0100\n"
 "Last-Translator: \n"
 "Language: en\n"
@@ -59,19 +59,19 @@ msgstr ""
 "bot message.It will handle your reply as if you sent a message in a "
 "private chat."
 
-#: keyboards.py:14
+#: keyboards.py:15
 msgid "GPT Provider"
 msgstr ""
 
-#: keyboards.py:15
+#: keyboards.py:17
 msgid "Language"
 msgstr ""
 
-#: keyboards.py:17
+#: keyboards.py:19
 msgid "❌Delete"
 msgstr ""
 
-#: keyboards.py:34 keyboards.py:49
+#: keyboards.py:36 keyboards.py:51
 msgid "↩️Back"
 msgstr ""
 
@@ -79,59 +79,58 @@ msgstr ""
 msgid "This is not your request"
 msgstr ""
 
-#: settings.py:20 settings.py:25
+#: settings.py:21 settings.py:26
 msgid "Settings⚙️"
 msgstr ""
 
-#: settings.py:34
+#: settings.py:35
 msgid "Choose your GPT provider. By default AiChatOnline is enabled."
 msgstr ""
 
-#: settings.py:42
+#: settings.py:43
 msgid "You chose the same provider."
 msgstr ""
 
-#: settings.py:45
+#: settings.py:46
 msgid "Provider was changed"
 msgstr ""
 
-#: settings.py:54
+#: settings.py:55
 msgid "Choose your language:"
 msgstr ""
 
-#: settings.py:63
+#: settings.py:64
 msgid "You chose the same language"
 msgstr ""
 
-#: settings.py:66
+#: settings.py:67
 msgid "Language have been changed."
 msgstr ""
 
-#: settings.py:72
+#: settings.py:73
 msgid "Settings were deleted."
 msgstr ""
 
-#: modules/ChatGPT/chatgpt.py:76
-msgid "Too many requests. Please be patient and retry a little later."
+#: modules/ChatGPT/chatgpt.py:126
+msgid "Generating..."
 msgstr ""
 
-#: modules/ChatGPT/chatgpt.py:78
+#: modules/ChatGPT/chatgpt.py:137
+msgid "Sorry, no provider has responded."
+msgstr ""
+
+#: modules/ChatGPT/chatgpt.py:156
+msgid "Too many requests. Changing provider to {0} and retrying."
+msgstr ""
+
+#: modules/ChatGPT/chatgpt.py:160
 msgid ""
 "Sorry, your message wasn't handled properly. Please retry or try to clear"
 " your history."
 msgstr ""
 
-#: modules/ChatGPT/chatgpt.py:103
-msgid "Generating..."
-msgstr ""
-
-#: modules/ChatGPT/chatgpt.py:117
-msgid "Sorry, the message was too long"
-msgstr ""
-
-#: modules/ChatGPT/chatgpt.py:119 modules/images/image_generation.py:51
-#: modules/images/image_generation.py:65
-msgid "Sorry, some problem occurred"
+#: modules/ChatGPT/chatgpt.py:177
+msgid "Sorry, some problem occurred. Changing provider to {0} and retrying"
 msgstr ""
 
 #: modules/audio/audio.py:42 modules/images/text_recognition.py:28
@@ -140,6 +139,10 @@ msgstr ""
 
 #: modules/audio/audio.py:77
 msgid "Sorry, some problem occurred during transcription."
+msgstr ""
+
+#: modules/images/image_generation.py:51 modules/images/image_generation.py:65
+msgid "Sorry, some problem occurred"
 msgstr ""
 
 #: modules/images/image_generation.py:69
@@ -186,5 +189,11 @@ msgstr ""
 #~ msgstr ""
 
 #~ msgid "Provider"
+#~ msgstr ""
+
+#~ msgid "Too many requests. Please be patient and retry a little later."
+#~ msgstr ""
+
+#~ msgid "Sorry, the message was too long"
 #~ msgstr ""
 

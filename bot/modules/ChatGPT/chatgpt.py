@@ -62,7 +62,7 @@ class ChatGPT:
             return True if response != "" else False
 
         if await step() and await step():
-            print(provider.__name__+" works fine!")
+            print(provider.__name__ + " works fine!")
             return provider, True
         return provider, False
 
@@ -153,8 +153,8 @@ async def reply(msg: Message, mes: Message, provider: str, retry=0):
             retry += 1
             if e.response.status_code == 429 or 401:
                 await bot.edit_message_text(chat_id=mes.chat.id, message_id=mes.message_id,
-                                            text=_(
-                                                f"Too many requests. Changing provider to {next_provider} and retrying."))
+                                            text=_("Too many requests. Changing provider to {0} and retrying.").format(
+                                                next_provider))
                 return await reply(msg, mes, next_provider, retry)
             else:
                 response = _("Sorry, your message wasn't handled properly. Please retry or try to clear your history.")
@@ -174,6 +174,5 @@ async def reply(msg: Message, mes: Message, provider: str, retry=0):
                     (chatgpt.provider_list.index(provider) + 1) % len(chatgpt.provider_list)]
                 retry += 1
                 await bot.edit_message_text(chat_id=mes.chat.id, message_id=mes.message_id,
-                                            text=_(
-                                                f"Sorry, some problem occurred. Changing provider to {next_provider} and retrying"))
+                    text=_("Sorry, some problem occurred. Changing provider to {0} and retrying").format(next_provider))
                 return await reply(msg, mes, next_provider, retry)

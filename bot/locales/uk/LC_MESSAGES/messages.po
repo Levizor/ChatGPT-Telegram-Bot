@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2023-12-15 23:39+0100\n"
-"PO-Revision-Date: 2023-12-15 23:42+0100\n"
+"POT-Creation-Date: 2023-12-24 18:20+0100\n"
+"PO-Revision-Date: 2023-12-24 18:23+0100\n"
 "Last-Translator: \n"
 "Language-Team: uk <LL@li.org>\n"
 "Language: uk\n"
@@ -48,8 +48,8 @@ msgstr ""
 "Групове використання:\n"
 "\n"
 "Щоб забезпечити правильну роботу бота у групі, надайте боту роль "
-"адміністратора, щоб він міг бачити всі повідомлення в групі. Це "
-"дозволить використовувати команду /call: \n"
+"адміністратора, щоб він міг бачити всі повідомлення в групі. Це дозволить "
+"використовувати команду /call: \n"
 "\n"
 "Відповідайте на повідомлення використовуючи команду /call, щоб обробляти "
 "повідомлення на яке ви відповіли, як запит для асистента.\n"
@@ -62,19 +62,19 @@ msgstr ""
 "До того ж можна використовувати шаблон /call ЗАПИТ для безпосереднього "
 "надіслання запиту. ✨"
 
-#: keyboards.py:14
+#: keyboards.py:15
 msgid "GPT Provider"
 msgstr "Постачальник GPT"
 
-#: keyboards.py:15
+#: keyboards.py:17
 msgid "Language"
 msgstr "Мова"
 
-#: keyboards.py:17
+#: keyboards.py:19
 msgid "❌Delete"
 msgstr "❌Видалити"
 
-#: keyboards.py:34 keyboards.py:49
+#: keyboards.py:36 keyboards.py:51
 msgid "↩️Back"
 msgstr "↩️Назад"
 
@@ -82,65 +82,62 @@ msgstr "↩️Назад"
 msgid "This is not your request"
 msgstr "Це не ваш запит"
 
-#: settings.py:20 settings.py:25
+#: settings.py:21 settings.py:26
 msgid "Settings⚙️"
 msgstr "Налаштування⚙️"
 
-#: settings.py:34
+#: settings.py:35
 msgid "Choose your GPT provider. By default AiChatOnline is enabled."
-msgstr ""
-"Виберіть бажаного постачальника GPT. За замовчуванням - AiChatOnline."
+msgstr "Виберіть бажаного постачальника GPT. За замовчуванням - AiChatOnline."
 
-#: settings.py:42
+#: settings.py:43
 msgid "You chose the same provider."
 msgstr "Ви вибрали того самого постачальника."
 
-#: settings.py:45
+#: settings.py:46
 msgid "Provider was changed"
 msgstr "Постачальник був змінений."
 
-#: settings.py:54
+#: settings.py:55
 msgid "Choose your language:"
 msgstr "Виберіть вашу мову:"
 
-#: settings.py:63
+#: settings.py:64
 msgid "You chose the same language"
 msgstr "Ви вибрали ту саму мову."
 
-#: settings.py:66
+#: settings.py:67
 msgid "Language have been changed."
 msgstr "Мова була змінена. "
 
-#: settings.py:72
+#: settings.py:73
 msgid "Settings were deleted."
 msgstr "Налаштування були видалені."
 
-#: modules/ChatGPT/chatgpt.py:76
-#, fuzzy
-msgid "Too many requests. Please be patient and retry a little later."
-msgstr "Забагато запитів. Будь ласка, повторіть пізніше."
+#: modules/ChatGPT/chatgpt.py:126
+msgid "Generating..."
+msgstr "Генерація відповіді..."
 
-#: modules/ChatGPT/chatgpt.py:78
+#: modules/ChatGPT/chatgpt.py:137
+msgid "Sorry, no provider has responded."
+msgstr "Вибачте, ні один з провайдерів не відповів."
+
+#: modules/ChatGPT/chatgpt.py:156
+msgid "Too many requests. Changing provider to {0} and retrying."
+msgstr "Забагато запитів. Змінюю постачальника на {0} і повторю спробу."
+
+#: modules/ChatGPT/chatgpt.py:160
 msgid ""
-"Sorry, your message wasn't handled properly. Please retry or try to "
-"clear your history."
+"Sorry, your message wasn't handled properly. Please retry or try to clear "
+"your history."
 msgstr ""
 "Вибачте, ваше повідомлення не було оброблено належним чином. Будь ласка, "
 "повторіть спробу, або очистіть історію повідомлень."
 
-#: modules/ChatGPT/chatgpt.py:103
-msgid "Generating..."
-msgstr "Генерація відповіді..."
-
-#: modules/ChatGPT/chatgpt.py:117
-msgid "Sorry, the message was too long"
-msgstr "Вибачте, повідомлення було занадто довгим"
-
-#: modules/ChatGPT/chatgpt.py:119 modules/images/image_generation.py:51
-#: modules/images/image_generation.py:65
-#, fuzzy
-msgid "Sorry, some problem occurred"
-msgstr "Вибачте, виникла якась проблема"
+#: modules/ChatGPT/chatgpt.py:177
+msgid "Sorry, some problem occurred. Changing provider to {0} and retrying"
+msgstr ""
+"Вибачте, виникла проблема. Змінюю постачальника на {0} та повторюю спробу."
 
 #: modules/audio/audio.py:42 modules/images/text_recognition.py:28
 msgid "Couldn't recognize anything."
@@ -150,10 +147,14 @@ msgstr "Не вдалося розпізнати."
 msgid "Sorry, some problem occurred during transcription."
 msgstr "Вибачте, виникла помилка під час транскрипції."
 
+#: modules/images/image_generation.py:51 modules/images/image_generation.py:65
+msgid "Sorry, some problem occurred"
+msgstr "Вибачте, виникла проблема"
+
 #: modules/images/image_generation.py:69
 msgid ""
-"Please, provide a prompt. Add it after the command or just reply with "
-"this command to the prompt."
+"Please, provide a prompt. Add it after the command or just reply with this "
+"command to the prompt."
 msgstr ""
 "Будь ласка, задайте запит. Додайте його після команди або відповісте на "
 "нього цією командою."
@@ -185,3 +186,9 @@ msgstr "Виберіть тип/якість"
 #: modules/yt/youtube.py:88
 msgid "Sorry, filesize of this video is greater than the limit (50 Mb)"
 msgstr "Вибачте, розмір відео перевищує 50 мб"
+
+#~ msgid "Too many requests. Please be patient and retry a little later."
+#~ msgstr "Забагато запитів. Будь ласка, повторіть пізніше."
+
+#~ msgid "Sorry, the message was too long"
+#~ msgstr "Вибачте, повідомлення було занадто довгим"
