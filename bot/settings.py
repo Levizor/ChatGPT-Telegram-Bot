@@ -1,16 +1,17 @@
-from aiogram import Router
-from aiogram.types import CallbackQuery
-from bot_instance import bot
-from bot.filters import CallBackSettingsData
 from aiogram import F
+from aiogram import Router
+from aiogram.filters.command import Command
+from aiogram.fsm.context import FSMContext
+from aiogram.types import CallbackQuery
+from aiogram.types import Message
 from aiogram.utils.i18n import gettext as _
+
+import bot.keyboards as kb
+from bot.filters import CallBackSettingsData
+from bot.modules.ChatGPT.chatgpt import chatgpt
+from bot_instance import bot
 from dispatcher_instance import fsmi18n
 from dispatcher_instance import locales
-import bot.keyboards as kb
-from aiogram.fsm.context import FSMContext
-from aiogram.types import Message
-from aiogram.filters.command import Command
-from bot.modules.ChatGPT.chatgpt import chatgpt
 
 settings = Router()
 

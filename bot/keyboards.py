@@ -1,7 +1,8 @@
-from aiogram.utils.keyboard import InlineKeyboardBuilder, KeyboardBuilder
-from bot.filters import CallBackSettingsData
-from aiogram.utils.keyboard import InlineKeyboardButton
 from aiogram.utils.i18n import gettext as _
+from aiogram.utils.keyboard import InlineKeyboardBuilder
+from aiogram.utils.keyboard import InlineKeyboardButton
+
+from bot.filters import CallBackSettingsData
 
 langs = {'en': 'Eng',
          'uk': 'Укр',
@@ -11,7 +12,8 @@ langs = {'en': 'Eng',
 async def settings_keyboard(user_id: int):
     builder = InlineKeyboardBuilder()
 
-    builder.button(text=_("GPT Provider"), callback_data=CallBackSettingsData(user_id=user_id, button="provider").pack())
+    builder.button(text=_("GPT Provider"),
+                   callback_data=CallBackSettingsData(user_id=user_id, button="provider").pack())
     builder.button(text=_("Language"), callback_data=CallBackSettingsData(user_id=user_id, button="lan").pack())
     builder.row(
         InlineKeyboardButton(text=_("❌Delete"),

@@ -20,11 +20,10 @@ from dispatcher_instance import dp
 # Configure logging
 if not test:
     logging.basicConfig(
-    filename='bot.log',  # Specify the log file
-    level=logging.ERROR,  # Set the logging level to capture ERROR and above
-    format='%(asctime)s - %(levelname)s - %(message)s',
-)
-
+        filename='bot.log',  # Specify the log file
+        level=logging.ERROR,  # Set the logging level to capture ERROR and above
+        format='%(asctime)s - %(levelname)s - %(message)s',
+    )
 
 
 def register_routers(dp: Dispatcher) -> None:
@@ -41,7 +40,7 @@ def register_routers(dp: Dispatcher) -> None:
     from bot.settings import settings
 
     # Append routers with commands in a specific order
-    dp.include_routers(imgenrouter, settings, cmdrouter,  ytrouter, ttrouter, imgrouter, gptrouter,
+    dp.include_routers(imgenrouter, settings, cmdrouter, ytrouter, ttrouter, imgrouter, gptrouter,
                        avrouter, txtrcgrouter)
 
 
