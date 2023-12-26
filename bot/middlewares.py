@@ -13,9 +13,9 @@ from database.database import db
 
 
 class ChatGPTProvider(BaseMiddleware):
-    def __init__(self, provider):
+    def __init__(self, providers: dict):
+        self.providers = providers
         self.key = 'provider'
-        self.default_provider = provider
 
     async def __call__(
             self,
@@ -29,7 +29,7 @@ class ChatGPTProvider(BaseMiddleware):
             fsm_data = await fsm_context.get_data()
             provider = fsm_data.get(self.key, None)
         if not provider:
-            provider = self.default_provider
+            provider = next(iter(self.providers.keys()))
             if fsm_context:
                 await fsm_context.update_data(data={self.key: provider})
         data.update(provider=provider)

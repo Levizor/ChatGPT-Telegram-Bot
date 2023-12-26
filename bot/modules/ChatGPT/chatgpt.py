@@ -12,16 +12,15 @@ from aiogram.utils.i18n import gettext as _
 from g4f import ChatCompletion, Provider
 from openai import AsyncOpenAI
 
-from bot.middlewares import ChatGPTProvider
 from bot.middlewares import DatabaseMiddleware, ObservedFieldRestrictionMiddleware
 from bot_instance import bot
 from config import OPEN_AI
 
-logging.basicConfig(
+"""logging.basicConfig(
     filename='chatgpt.log',  # Specify the log file
     level=logging.ERROR,  # Set the logging level to capture ERROR and above
     format='%(asctime)s - %(levelname)s - %(message)s',
-)
+)"""
 
 
 # Define the ChatGPT class for handling chat responses
@@ -47,8 +46,6 @@ class ChatGPT:
         for provider, works in results:
             if works:
                 self.providers[provider.__name__] = provider
-
-        self.provider_list = list(self.providers.keys())
 
     checking_list = [{"role": "user", "content": "Hi, reply shortly if you hear me."}]
 
@@ -115,7 +112,6 @@ gptrouter = Router()
 # Apply middlewares for chat handling
 gptrouter.message.middleware(ObservedFieldRestrictionMiddleware())
 gptrouter.message.middleware(ChatActionMiddleware())
-gptrouter.message.middleware(ChatGPTProvider("AiChatOnline"))
 gptrouter.message.middleware(DatabaseMiddleware(request_type="text_requests"))
 
 
@@ -132,32 +128,31 @@ async def chat(msg: Message, provider: str, state: FSMContext):
 
 
 async def reply(msg: Message, mes: Message, provider: str, retry=0):
-    if retry > len(chatgpt.provider_list):
+    if retry > len(chatgpt.providers):
         await bot.edit_message_text(chat_id=mes.chat.id, message_id=mes.message_id,
                                     text=_("Sorry, no provider has responded."))
         return provider
 
-
     if msg.reply_to_message and msg.reply_to_message.text:
-        request_text=(f"User replies to this message:\n\n{msg.reply_to_message.text}\n\n"
-                      f"with this request:\n\n"
-                      f"{msg.text}")
+        request_text = (f"User replies to this message:\n\n{msg.reply_to_message.text}\n\n"
+                        f"with this request:\n\n"
+                        f"{msg.text}")
     else:
-        request_text=msg.text
+        request_text = msg.text
+
     async with ChatActionSender(bot=bot, chat_id=msg.chat.id):
         # Get response from ChatGPT
 
         try:
             response = await chatgpt.get_response(msg.from_user.id, request_text, provider)
             # Delete the "Generating..." message and send the response
-
             await bot.edit_message_text(chat_id=mes.chat.id, message_id=mes.message_id, text=response)
             return provider
 
         # Handle HTTP errors from the GPT model
         except requests.exceptions.HTTPError as e:
-            next_provider = chatgpt.provider_list[
-                (chatgpt.provider_list.index(provider) + 1) % len(chatgpt.provider_list)]
+            next_provider = list(chatgpt.providers.keys())[
+                (list(chatgpt.providers.keys()).index(provider) + 1) % len(chatgpt.providers)]
             retry += 1
             if e.response.status_code == 429 or 401:
                 await bot.edit_message_text(chat_id=mes.chat.id, message_id=mes.message_id,
@@ -178,9 +173,11 @@ async def reply(msg: Message, mes: Message, provider: str, retry=0):
                 await msg.answer(response[midpoint:], reply_to_message_id=mes.message_id)
                 return provider
             else:
-                next_provider = chatgpt.provider_list[
-                    (chatgpt.provider_list.index(provider) + 1) % len(chatgpt.provider_list)]
+                next_provider = list(chatgpt.providers.keys())[
+                    (list(chatgpt.providers.keys()).index(provider) + 1) % len(chatgpt.providers)]
                 retry += 1
                 await bot.edit_message_text(chat_id=mes.chat.id, message_id=mes.message_id,
-                    text=_("Sorry, some problem occurred. Changing provider to {0} and retrying").format(next_provider))
+                                            text=_(
+                                                "Sorry, some problem occurred. Changing provider to {0} and retrying").format(
+                                                next_provider))
                 return await reply(msg, mes, next_provider, retry)

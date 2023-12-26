@@ -49,6 +49,7 @@ async def on_startup(bot: aiogram.Bot):
     scheduler.start()
     await db.create_tables()
     await chatgpt.update_providers()
+
     # Set webhook if not in test mode
     if not test:
         await bot.set_webhook(f"{BASE_WEBHOOK_URL}{WEBHOOK_PATH}")
