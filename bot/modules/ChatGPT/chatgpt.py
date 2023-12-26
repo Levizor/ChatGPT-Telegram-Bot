@@ -136,11 +136,19 @@ async def reply(msg: Message, mes: Message, provider: str, retry=0):
         await bot.edit_message_text(chat_id=mes.chat.id, message_id=mes.message_id,
                                     text=_("Sorry, no provider has responded."))
         return provider
+
+
+    if msg.reply_to_message and msg.reply_to_message.text:
+        request_text=(f"User replies to this message:\n\n{msg.reply_to_message.text}\n\n"
+                      f"with this request:\n\n"
+                      f"{msg.text}")
+    else:
+        request_text=msg.text
     async with ChatActionSender(bot=bot, chat_id=msg.chat.id):
         # Get response from ChatGPT
 
         try:
-            response = await chatgpt.get_response(msg.from_user.id, msg.text, provider)
+            response = await chatgpt.get_response(msg.from_user.id, request_text, provider)
             # Delete the "Generating..." message and send the response
 
             await bot.edit_message_text(chat_id=mes.chat.id, message_id=mes.message_id, text=response)
