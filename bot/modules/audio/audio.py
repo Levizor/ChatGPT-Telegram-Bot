@@ -2,13 +2,16 @@
 
 
 import os
+
+import aiogram.exceptions
 import aiohttp
 from aiogram import Router, types, flags, F
-from bot.middlewares import DatabaseMiddleware, ObservedFieldRestrictionMiddleware
 from aiogram.utils.chat_action import ChatActionMiddleware
-from config import EDEN_AI
-from bot_instance import bot
 from aiogram.utils.i18n import gettext as _
+
+from bot.middlewares import DatabaseMiddleware, ObservedFieldRestrictionMiddleware
+from bot_instance import bot
+from config import EDEN_AI
 
 
 # Define the VoiceRecognition class for handling audio recognition
@@ -57,6 +60,7 @@ class VoiceRecognition:
         # Perform an asynchronous GET request to the audio recognition API
         async with aiohttp.ClientSession() as session:
             async with session.get(url, headers=self.headers) as response:
+                "GOT IT"
                 return await response.json()
 
     @staticmethod
@@ -71,7 +75,6 @@ class VoiceRecognition:
         post = await self.perform_async_post(audio_path)
         transcription_url = self.transcription_url.format(public_id=post['public_id'])
         data = await self.perform_async_get(transcription_url)
-
         # Handle errors during transcription
         if data['error'] is not None:
             return _("Sorry, some problem occurred during transcription.")
@@ -96,11 +99,29 @@ vr = VoiceRecognition(provider="openai")
 @avrouter.message(F.voice)
 async def voice_handler(msg: types.Message):
     text = await vr.recognize(msg.voice.file_id)
-    await msg.answer(text, reply_to_message_id=msg.message_id)
-
-
+    try:
+        await msg.answer(text, reply_to_message_id=msg.message_id)
+    except aiogram.exceptions.TelegramBadRequest:
+        parts = await split_text(text)
+        for text in parts:
+            await msg.answer(text, reply_to_message_id=msg.message_id)
 @flags.chat_action("typing")
 @avrouter.message(F.audio)
 async def audio_handler(msg: types.Message):
     text = await vr.recognize(msg.audio.file_id)
-    await msg.answer(text, reply_to_message_id=msg.message_id)
+    try:
+        await msg.answer(text, reply_to_message_id=msg.message_id)
+    except aiogram.exceptions.TelegramBadRequest:
+        parts=await split_text(text)
+        for text in parts:
+            await msg.answer(text, reply_to_message_id=msg.message_id)
+
+
+async def split_text(text:str) -> list:
+    length=len(text)
+    amount=int(length/4000)+(length%4000!=0)
+    list=[]
+    for i in range(amount):
+        list.append(text[i*4000:(i+1)*4000])
+
+    return list
