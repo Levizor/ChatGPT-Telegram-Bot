@@ -15,6 +15,7 @@ from openai import AsyncOpenAI
 from bot.middlewares import DatabaseMiddleware, ObservedFieldRestrictionMiddleware
 from bot_instance import bot
 from config import OPEN_AI
+from database.database import db
 
 """logging.basicConfig(
     filename='chatgpt.log',  # Specify the log file
@@ -146,7 +147,9 @@ async def reply(msg: Message, mes: Message, provider: str, retry=0):
         try:
             response = await chatgpt.get_response(msg.from_user.id, request_text, provider)
             # Delete the "Generating..." message and send the response
-            await bot.edit_message_text(chat_id=mes.chat.id, message_id=mes.message_id, text=response)
+            mes = await bot.edit_message_text(chat_id=mes.chat.id, message_id=mes.message_id, text=response)
+            await db.log_message(mes)
+
             return provider
 
         # Handle HTTP errors from the GPT model

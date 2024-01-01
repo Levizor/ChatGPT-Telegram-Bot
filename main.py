@@ -48,6 +48,7 @@ async def on_startup(bot: aiogram.Bot):
     # Start the scheduler and create database tables on bot startup
     scheduler.start()
     await db.create_tables()
+
     await chatgpt.update_providers()
 
     # Set webhook if not in test mode

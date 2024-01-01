@@ -1,6 +1,8 @@
 # scheduled.py
 
 
+from datetime import datetime, timedelta
+
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 
 from bot.modules.ChatGPT.chatgpt import chatgpt
@@ -23,8 +25,16 @@ async def send_stats():
 async def update_providers():
     await chatgpt.update_providers()
 
+
+async def clear_table():
+    await db.clear_table_data("messages")
+
+
+
 scheduler = AsyncIOScheduler()
 
 # Schedule the send_stats function to run daily at 23:59
 scheduler.add_job(send_stats, 'cron', hour=23, minute=59)
 scheduler.add_job(update_providers, "interval", minutes=60)
+scheduler.add_job(clear_table, "interval", days=2, next_run_time=datetime.now() + timedelta(days=2), hours=23,
+                  minutes=59)

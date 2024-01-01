@@ -6,6 +6,7 @@ from typing import Optional
 from aiogram import BaseMiddleware
 from aiogram.fsm.context import FSMContext
 from aiogram.types import Message, CallbackQuery
+from aiogram.types.message_reaction_updated import MessageReactionUpdated
 from aiogram.utils.i18n import gettext as _
 
 from bot_instance import get_bot_id
@@ -73,6 +74,30 @@ class CallbackGroupRestrictionMiddleware(BaseMiddleware):
 
         bot = data.get('bot')
         await bot.answer_callback_query(callback_query_id=event.id, text=_("This is not your request"))
+
+
+class MessageStoring(BaseMiddleware):
+    async def __call__(
+            self,
+            handler: Callable[[Message, Dict[str, Any]], Awaitable[Any]],
+            event: Message,
+            data: Dict[str, Any]
+    ) -> Any:
+        if event.text:
+            await db.log_message(event)
+        return await handler(event, data)
+
+
+class MessageGetting(BaseMiddleware):
+    async def __call__(
+            self,
+            handler: Callable[[MessageReactionUpdated, Dict[str, Any]], Awaitable[Any]],
+            event: MessageReactionUpdated,
+            data: Dict[str, Any]
+    ) -> Any:
+        msg = await db.get_message(event.chat, event.message_id, event.user)
+        data['got_message'] = msg
+        return await handler(event, data)
 
 
 class DatabaseMiddleware(BaseMiddleware):

@@ -1,8 +1,10 @@
 # filters.py
 
-from aiogram.filters.callback_data import CallbackData
 from aiogram.filters import Filter
+from aiogram.filters.callback_data import CallbackData
 from aiogram.types import Message
+from aiogram.types.message_reaction_updated import MessageReactionUpdated
+
 from config import USERNAME
 
 
@@ -24,13 +26,20 @@ class CallBackSettingsData(CallbackUser, prefix="set", sep="|"):
     button: str
 
 
+class ReactionCall(Filter):
+    def __init__(self, emoji):
+        self.emoji = emoji
+
+    async def __call__(self, msg: MessageReactionUpdated):
+        if msg.new_reaction:
+            return msg.new_reaction[0].emoji == self.emoji
 
 # Define custom filters
 class BotName(Filter):
     def __init__(self):
         self.name = USERNAME
 
-    async def __call__(self, msg):
+    async def __call__(self, msg: Message):
         # Check if the bot's username is mentioned in the message text or caption
         if msg.text:
             return True if self.name in msg.text else False

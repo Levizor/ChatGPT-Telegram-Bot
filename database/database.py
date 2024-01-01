@@ -1,7 +1,10 @@
 # database.py
-
-import aiosqlite
 from datetime import datetime
+
+import aiogram.types
+import aiosqlite
+from aiogram.types import Message
+
 
 class BotDatabase:
     def __init__(self, database_name='database/database.db'):
@@ -21,14 +24,39 @@ class BotDatabase:
             ''')
 
             await db_conn.execute('''
-                CREATE TABLE IF NOT EXISTS user_settings (
-                    user_id INTEGER PRIMARY KEY,
-                    language_code TEXT,
-                    chatgpt_source TEXT,
-                    FOREIGN KEY (user_id) REFERENCES requests (user_id)
+                CREATE TABLE IF NOT EXISTS messages (
+                    chat_id INTEGER,
+                    message_id INTEGER,
+                    date INTEGER,
+                    text TEXT, 
+                    PRIMARY KEY (chat_id, message_id)
                 )
-            ''')
+                ''')
 
+
+            await db_conn.commit()
+
+    async def get_message(self, chat: aiogram.types.Chat, message_id: int, user: aiogram.types.User) -> Message:
+        async with aiosqlite.connect(self.database_name) as db_conn:
+            row = await self.select_message(chat.id, message_id)
+
+            if row:
+                date, text = row
+                return Message(message_id=message_id, date=date, text=text, chat=chat, from_user=user)
+
+    async def select_message(self, chat_id, message_id):
+        async with aiosqlite.connect(self.database_name) as db_conn:
+            cursor = await db_conn.execute('SELECT date, text FROM messages WHERE chat_id=? AND message_id=?',
+                                           (chat_id, message_id))
+
+            return await cursor.fetchone()
+
+    async def log_message(self, msg: Message) -> None:
+        if await self.select_message(msg.chat.id, msg.message_id):
+            return
+        async with aiosqlite.connect(self.database_name) as db_conn:
+            await db_conn.execute('INSERT INTO messages (chat_id, message_id, date, text) VALUES (?, ?, ?, ?)',
+                                  (msg.chat.id, msg.message_id, msg.date, msg.text))
             await db_conn.commit()
 
     async def log_request(self, user_id, request_type):
@@ -62,6 +90,11 @@ class BotDatabase:
             cursor = await db_conn.execute('SELECT COUNT(DISTINCT user_id) FROM requests')
             users = await cursor.fetchall()
             return users[0][0]
+
+    async def clear_table_data(self, table_name: str):
+        async with aiosqlite.connect(self.database_name) as db_conn:
+            await db_conn.execute('DELETE FROM ?', table_name)
+
 
     async def get_statistics(self, date=None):
         # Get statistics for a specific date or the current date

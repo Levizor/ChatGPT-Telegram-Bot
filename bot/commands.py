@@ -1,16 +1,17 @@
 # commands.py
 import aiogram.fsm.context
-from aiogram.filters import Command, or_f, CommandStart
 from aiogram import Router, types, F, flags
+from aiogram.filters import Command, or_f, CommandStart
 from aiogram.types.message import Message
-from bot.keyboards import settings_keyboard
-from config import admin_ids
+from aiogram.types.message_reaction_updated import MessageReactionUpdated
 from aiogram.utils.i18n import gettext as _
-from dispatcher_instance import dp
-from bot_instance import bot
+
+from bot.filters import BotName, CommandArgs, ReactionCall
 from bot.modules.ChatGPT.chatgpt import chatgpt
+from bot_instance import bot
+from config import admin_ids
 from database.database import db
-from bot.filters import BotName, CommandArgs, CallBackSettingsData
+from dispatcher_instance import dp
 
 # Create a Router instance for commands
 cmdrouter = Router()
@@ -40,6 +41,13 @@ async def cmd_caption_call(msg: Message):
     message = msg.model_copy(update={"COMMAND": True, "caption": None, "from_user": msg.from_user})
     await dp.feed_raw_update(bot=bot, update={"update_id": 3, "message": message})
 
+
+@cmdrouter.message_reaction(ReactionCall("⚡"))
+async def reaction_call(msg: MessageReactionUpdated, got_message: Message):
+    if not got_message:
+        return
+    message = got_message.model_copy(update={"COMMAND": True, "from_user": msg.user})
+    await dp.feed_raw_update(bot=bot, update={"update_id": 3, "message": message})
 
 @cmdrouter.message(Command('clear'), CommandArgs(False))
 async def clear_history(msg: Message):
